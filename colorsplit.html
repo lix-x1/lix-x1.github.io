@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB Split Effect</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .channel-split-wrapper {
+            position: relative;
+            font-size: 64px;
+            perspective: 1500px;
+            perspective-origin: center;
+        }
+
+        .channel-split-static {
+            opacity: 0;
+        }
+
+        .channel-split {
+            position: absolute;
+            top: 0;
+            left: 0;
+            mix-blend-mode: screen;
+            /* Added blend mode */
+            color: #fff;
+            overflow: hidden;
+            /* Ensure elements do not overflow */
+        }
+
+        .channel-split-red {
+            filter: url('#red');
+            /* Added filter for red extract */
+            animation: ANIMATE-RED 2000ms infinite;
+        }
+
+        .channel-split-green {
+            filter: url('#green');
+            /* Added filter for green extract */
+        }
+
+        .channel-split-blue {
+            filter: url('#blue');
+            /* Added filter for blue extract */
+            animation: ANIMATE-BLUE 2000ms infinite;
+        }
+
+        @keyframes ANIMATE-RED {
+            0% {
+                transform: rotateZ(0);
+            }
+
+            50% {
+                transform: rotateZ(-6deg);
+            }
+
+            100% {
+                transform: rotateZ(0);
+            }
+        }
+
+        @keyframes ANIMATE-BLUE {
+            0% {
+                transform: rotateZ(0);
+            }
+
+            50% {
+                transform: rotateZ(6deg);
+            }
+
+            100% {
+                transform: rotateZ(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="text" class="channel-split-wrapper">
+        RGB
+        <img id="example-element" src="images/nft.png" width="200">
+        <video src="videos/download.webm" width="100%" autoplay="" loop="" muted="" playsinline=""></video>
+    </div>
+
+    <!-- SVG Filters for color extraction -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <filter id="red">
+                <feColorMatrix type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
+            </filter>
+            <filter id="green">
+                <feColorMatrix type="matrix" values="0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
+            </filter>
+            <filter id="blue">
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0" />
+            </filter>
+        </defs>
+    </svg>
+
+    <script>
+        // Creating elements tags above.
+        function channelSplit(elem) {
+            if (elem) {
+                const inner = elem.innerHTML;
+                elem.innerHTML = "";
+
+                const spanHidden = document.createElement("span");
+                spanHidden.classList.add("channel-split-static");
+                spanHidden.innerHTML = inner;
+                elem.appendChild(spanHidden);
+
+                ["red", "green", "blue"].forEach(x => {
+                    const span = document.createElement("span");
+                    span.classList.add("channel-split");
+                    span.classList.add(`channel-split-${x}`);
+                    span.innerHTML = inner;
+                    elem.appendChild(span);
+                });
+            }
+        }
+        channelSplit(document.getElementById("text"));
+    </script>
+</body>
+
+</html>
