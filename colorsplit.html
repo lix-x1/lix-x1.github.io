@@ -88,21 +88,21 @@
 <body>
     <div id="text" class="channel-split-wrapper">
         RGB
-        <img id="example-element" src="images/nft.png" width="200">
-        <video src="videos/download.webm" width="100%" autoplay="" loop="" muted="" playsinline=""></video>
+        <img id="example-element" src="./images/nft.png" width="500">
+        <video src="./videos/download.webm" width="100%" autoplay="" loop="" muted="" playsinline=""></video>
     </div>
 
     <!-- SVG Filters for color extraction -->
-    <svg xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0;">
+    <svg style="position: absolute; width: 0; height: 0;">
         <defs>
             <filter id="red">
                 <feColorMatrix type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
             </filter>
             <filter id="green">
-                <feColorMatrix type="matrix" values="0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0" />
             </filter>
             <filter id="blue">
-                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0" />
             </filter>
         </defs>
     </svg>
