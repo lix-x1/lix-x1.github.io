@@ -189,13 +189,14 @@ var v2 = {
     z: 0
     };
 var clipMode = {set: 'clip-path', open: 'polygon(', close: ')' }
+$app.thick = 4;
 function rotate_step() {
     rotateX = $app.lerp(delta_rotateX, $app.arr[0], 0.05);
     rotateY = $app.lerp(delta_rotateY, $app.arr[1], 0.05);
     rotateZ = $app.lerp(delta_rotateZ, $app.arr[2], 0.05);
     var $width = $app.figurea1.elem.clientWidth;
     var $height = $app.figurea1.elem.clientHeight;
-    var $thick = 4;
+    $thick = $app.thick;
     if (rotateX % 360 > 90 && rotateX % 360 < 270) {
         var clipPathStr = 
         $app.figurea2.elem.style.setProperty(clipMode.set, clipMode.open+'0px 0px, ' +
@@ -251,7 +252,8 @@ function rotate_step() {
         ${corners[6]}px ${corners[7]}px, 
         ${corners[4]}px ${corners[5]}px
         `+clipMode.close);
-    
+
+
     $app.figurea3.elem.style.setProperty(clipMode.set, clipMode.open+`
         ${corners[0]-($thick*center_distances[0])}px ${corners[1]-($thick*center_distances[0])}px, 
         ${corners[2]-($thick*center_distances[1])}px ${corners[3]-($thick*center_distances[1])}px, 
@@ -290,3 +292,24 @@ if (CSS.paintWorklet) {
     $app.figurea3.elem.style.setProperty("mask", "paint()")
     $app.figurea2.elem.style.setProperty("mask", "paint()")
 }
+// Creating elements tags above.
+function channelSplit(elem) {
+    if (elem) {
+        const inner = elem.innerHTML;
+        elem.innerHTML = "";
+
+        const spanHidden = document.createElement("span");
+        spanHidden.classList.add("channel-split-static");
+        spanHidden.innerHTML = inner;
+        elem.appendChild(spanHidden);
+
+        ["red", "green", "blue"].forEach(x => {
+            const span = document.createElement("span");
+            span.classList.add("channel-split");
+            span.classList.add(`channel-split-${x}`);
+            span.innerHTML = inner;
+            elem.appendChild(span);
+        });
+    }
+}
+channelSplit(document.getElementById("text"));
