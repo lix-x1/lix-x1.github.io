@@ -7,12 +7,13 @@ $app.rotateReq = 0;
 $app.lerp = function lerp(a, b, t) {
     return a + (b - a) * t;
 }
-$app.distanceVector = function (v1, v2) {
+$app.distanceVector = function (v1, v2, flip) {
     var dx = v1.x - v2.x;
     var dy = v1.y - v2.y;
     var dz = v1.z - v2.z;
-
-    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+    var fl = v1.x < v2.x && flip? -1: 1;
+    fl *= v1.y < v2.y && flip? -1: 1;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz)*fl;
 }
 $app.nft_image = { elem: document.getElementById('nft_image') };
 $app.figurea0 = { elem: document.getElementById('figurea0'), address: document.getElementById('nft_address') };
@@ -51,7 +52,7 @@ function adjustblurcard(card) {
         var elt = document.getElementById("marker" + i);
         elt.style.left = corners[i] + "px";
         elt.style.top = corners[i + 1] + "px";
-        center_distances[i/2 >> 0] = $app.distanceVector(screenhalfv, {x: corners[i], y: corners[i + 1], z: 0}) / screenhalfv.x;
+        center_distances[i/2 >> 0] = $app.distanceVector(screenhalfv, {x: corners[i], y: corners[i + 1], z: 0}, true) / screenhalfv.x;
     }
     //console.clear();
     //console.log(center_distances);
@@ -253,15 +254,26 @@ function rotate_step() {
         ${corners[4]}px ${corners[5]}px
         `+clipMode.close);
 
+    if ($app.custom !== undefined)
+        $app.custom[0]();
+    else
+        if (center_distances[0] < center_distances[1]) {
+            $app.figurea1.elem.style.zIndex = 1;
+        } else {
+            $app.figurea1.elem.style.zIndex = 2;
+            $app.figurea3.elem.style.setProperty(clipMode.set, clipMode.open+`
+                ${corners[0]+($thick*center_distances[0])}px ${corners[1]-($thick*center_distances[0])}px, 
+                ${corners[2]-($thick*center_distances[1])}px ${corners[3]+($thick*center_distances[1])}px, 
+                ${corners[6]-($thick*center_distances[2])}px ${corners[7]-($thick*center_distances[2])}px, 
+                ${corners[4]+($thick*center_distances[3])}px ${corners[5]+($thick*center_distances[3])}px
+                `+clipMode.close);
+                console.clear();
+        }
 
-    $app.figurea3.elem.style.setProperty(clipMode.set, clipMode.open+`
-        ${corners[0]-($thick*center_distances[0])}px ${corners[1]-($thick*center_distances[0])}px, 
-        ${corners[2]-($thick*center_distances[1])}px ${corners[3]-($thick*center_distances[1])}px, 
-        ${corners[6]-($thick*center_distances[2])}px ${corners[7]-($thick*center_distances[2])}px, 
-        ${corners[4]-($thick*center_distances[3])}px ${corners[5]-($thick*center_distances[3])}px
-        `+clipMode.close);
-
-    disvec = $app.distanceVector(v1, v2);
+    //console.log(center_distances[0] < center_distances[1]);
+    //console.log(corners[5]+" < "+(corners[5]-($thick*center_distances[3])));
+    
+    disvec = $app.distanceVector(v1, v2, false);
     if (disvec < 1) {
         cancelAnimationFrame($app.rotateReq);
         $app.rotateReq = 0;
