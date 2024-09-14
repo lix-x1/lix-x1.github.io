@@ -1,482 +1,467 @@
 <!DOCTYPE html>
 <style>
-  body {
-    background: black;
-    color: white;
-    font-size: 10px;
-    font-family: "Inter", sans-serif;
-    font-family: 'Poppins', sans-serif;
-    background-color: #000;
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .container,
-  .loadingContainer {
-    width: 100%;
-    max-width: 1440px;
-    padding: 1.5rem 0;
-    margin: 100px auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .loadingContainer {
-    min-height: 100vh;
-    margin: 0px auto;
-  }
-
-  .loadingContainer h1 {
-    font-weight: 700;
-    font-size: 2rem;
-  }
-
-
-  .report_card {
-    font-size: 12px;
-    z-index: 2;
-    left: 0;
-    top: 100px;
-    position: absolute;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  }
-
-  .report_ball {
-    position: absolute;
-    border-radius: 100%;
-    outline: #FFF dashed 2px;
-    z-index: 5;
-    box-shadow:
-      0 0.2em 0.1em rgba(255, 255, 255, 0.3),
-      0 -0.2em 0.4em rgba(0, 0, 0, 0.6);
-    width: 50px;
-    height: 50px;
-    transition: left 0.2s linear, top 0.2s linear, transform 0.2s linear;
-  }
-
-  @property --radius {
-    syntax: "<length>";
-    inherits: true;
-    initial-value: 0;
-  }
-
-  @property --border {
-    syntax: "<length>";
-    inherits: true;
-    initial-value: 0;
-  }
-
-  .nft_card div.mint,
-  .nft_card div.wallet {
-    display: inline-block;
-    cursor: pointer;
-    --radius: 17px;
-    --border: 12px;
-    --t: 0;
-    -webkit-mask: paint(rounded-shape);
-  }
-
-  .nft_card div.mint::before,
-  .nft_card div.wallet::before {
-    content: "";
-    display: block;
-    background: var(--back, red);
-  }
-
-  .nft_card div.border::before {}
-
-  .hexagone::before,
-  .triangle::before {
-    padding-top: 86.6%;
-  }
-
-  .star::before,
-  .custom::before {
-    padding-top: 100%;
-  }
-
-  .arrow::before {
-    padding-top: 70%;
-  }
-
-  .nft_card {
-    perspective: 1300px;
-    width: 100%;
-    position: relative;
-
-  }
-
-  .glitch_wrapper,
-  .nft_address {
-    padding: 280px 5px;
-    width: 100%;
-    height: 100%;
-    justify-content: left;
-    text-align: left;
-  }
-
-  .glitch_wrapper {
-    padding: 290px 5px;
-    text-align: right;
-  }
-
-  .glitch {
-    position: relative;
-    font-size: 40px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: #fff;
-    letter-spacing: 5px;
-    z-index: 1;
-  }
-
-  .glitch:before,
-  .glitch:after {
-    display: block;
-    content: attr(data-glitch);
-    position: absolute;
-    top: 0;
-    right: 0;
-    opacity: 0.8;
-  }
-
-  .glitch:before {
-    animation: glitch-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-    color: #00ffff;
-    z-index: -1;
-  }
-
-  .glitch:after {
-    animation: glitch-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
-    color: #ff00ff;
-    z-index: -2;
-  }
-
-  @keyframes glitch-color {
-    0% {
-      transform: translate(0);
+    body {
+        background: black;
+        color: white;
+        font-size: 10px;
+        font-family: "Inter", sans-serif;
+        font-family: 'Poppins', sans-serif;
+        background-color: #000;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
-    20% {
-      transform: translate(-3px, 3px);
+    .container, .loadingContainer {
+        width: 100%;
+        max-width: 1440px;
+        padding: 1.5rem 0;
+        margin: 100px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
-    40% {
-      transform: translate(-3px, -3px);
+    .loadingContainer {
+        min-height: 100vh;
+        margin: 0px auto;
     }
 
-    60% {
-      transform: translate(3px, 3px);
+    .loadingContainer h1 {
+        font-weight: 700;
+        font-size: 2rem;
     }
 
-    80% {
-      transform: translate(3px, -3px);
+    .report_card {
+        font-size: 12px;
+        z-index: 2;
+        left: 0;
+        top: 100px;
+        position: absolute;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     }
 
-    to {
-      transform: translate(0);
-    }
-  }
-
-  .channel-split-wrapper {
-    position: relative;
-    font-size: 64px;
-    perspective: 1500px;
-    perspective-origin: center;
-  }
-
-  .channel-split-static {
-    opacity: 0;
-  }
-
-  .channel-split {
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    mix-blend-mode: screen;
-    /* Added blend mode */
-    color: #fff;
-    overflow: hidden;
-    /* Ensure elements do not overflow */
-  }
-
-  .channel-split-red {
-    filter: url('#red');
-    /* Added filter for red extract */
-    animation: ANIMATE-RED 2000ms infinite;
-  }
-
-  .channel-split-green {
-    filter: url('#green');
-    /* Added filter for green extract */
-  }
-
-  .channel-split-blue {
-    filter: url('#blue');
-    /* Added filter for blue extract */
-    animation: ANIMATE-BLUE 2000ms infinite;
-  }
-
-  @keyframes ANIMATE-RED {
-    0% {
-      transform: rotateZ(0);
+    .report_ball {
+        position: absolute;
+        border-radius: 100%;
+        outline: #FFF dashed 2px;
+        z-index: 5;
+        box-shadow: 0 0.2em 0.1em rgba(255, 255, 255, 0.3), 0 -0.2em 0.4em rgba(0, 0, 0, 0.6);
+        width: 50px;
+        height: 50px;
+        transition: left 0.2s linear, top 0.2s linear, transform 0.2s linear;
     }
 
-    50% {
-      transform: rotateZ(-6deg);
+    @property --radius {
+        syntax: "<length>";
+        inherits: true;
+        initial-value: 0;
     }
 
-    100% {
-      transform: rotateZ(0);
-    }
-  }
-
-  @keyframes ANIMATE-BLUE {
-    0% {
-      transform: rotateZ(0);
+    @property --border {
+        syntax: "<length>";
+        inherits: true;
+        initial-value: 0;
     }
 
-    50% {
-      transform: rotateZ(6deg);
+    .nft_card div.mint, .nft_card div.wallet {
+        display: inline-block;
+        cursor: pointer;
+        --radius: 17px;
+        --border: 12px;
+        --t: 0;
+        -webkit-mask: paint(rounded-shape);
     }
 
-    100% {
-      transform: rotateZ(0);
+    .nft_card div.mint::before, .nft_card div.wallet::before {
+        content: "";
+        display: block;
+        background: var(--back, red);
     }
-  }
 
-  .nft_card video {
-    z-index: -1;
-  }
+    .nft_card div.border::before {
+    }
 
-  .nft_card .nft_address {
-    transform-style: preserve-3d;
-    z-index: 34;
-    position: absolute;
-  }
+    .hexagone::before, .triangle::before {
+        padding-top: 86.6%;
+    }
 
-  .nft_card .background,
-  .nft_card .wallet,
-  .nft_card .mint {
-    height: fit-content;
-    width: 100%;
-    position: absolute;
-    transform-style: preserve-3d;
-    inset: 0;
-  }
+    .star::before, .custom::before {
+        padding-top: 100%;
+    }
 
-  .nft_card .background {
-    /*animation: animate 5s linear alternate infinite;*/
-  }
+    .arrow::before {
+        padding-top: 70%;
+    }
 
-  .nft_card .wallet {
-    z-index: 1;
-    filter: blur(5px);
-    /*animation: animate 5s linear alternate infinite;*/
-  }
+    .nft_card {
+        perspective: 1300px;
+        width: 100%;
+        position: relative;
+    }
 
-  .nft_card .wallet h1,
-  .nft_card .wallet p {
-    background: #000;
-  }
+    .glitch_wrapper, .nft_address {
+        padding: 280px 5px;
+        width: 100%;
+        height: 100%;
+        justify-content: left;
+        text-align: left;
+    }
 
-  .nft_card .figurea0 {
-    padding: 2px;
-    z-index: 4;
-    transform: rotate3d(1, 1, 0, 60deg);
-    /* clip-path: polygon(0px 0px, 100px 0px, 100px 100px, 0px 100px, 0px 5px, 5px 5px, 5px 95px, 95px 95px, 95px 5px, 0px 5px); */
-    width: 100%;
-    height: 400px;
-    transform-style: preserve-3d;
-    position: absolute;
-  }
+    .glitch_wrapper {
+        padding: 290px 5px;
+        text-align: right;
+    }
 
-  .nft_card .figurea1 {
-    padding: 2px;
-    z-index: 2;
-    transform: rotate3d(1, 1, 0, 60deg);
-    /* clip-path: polygon(0px 0px, 100px 0px, 100px 100px, 0px 100px, 0px 5px, 5px 5px, 5px 95px, 95px 95px, 95px 5px, 0px 5px); */
-    width: 100%;
-    height: 400px;
-    transform-style: preserve-3d;
-    position: relative;
-    background: url('./images/tele3.jpg') repeat;
-    background-position: 0px 0px;
-  }
+    .glitch {
+        position: relative;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1.2;
+        color: #fff;
+        letter-spacing: 5px;
+        z-index: 1;
+    }
 
-  .nft_card .mint {
-    z-index: 0;
-    filter: grayscale(13%) sepia(5%) blur(1px) brightness(200%) saturate(378%) contrast(203%);
-    /* clip-path: polygon(50% 0%, 50% 50%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+    .glitch:before, .glitch:after {
+        display: block;
+        content: attr(data-glitch);
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: 0.8;
+    }
+
+    .glitch:before {
+        animation: glitch-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        color: #00ffff;
+        z-index: -1;
+    }
+
+    .glitch:after {
+        animation: glitch-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+        color: #ff00ff;
+        z-index: -2;
+    }
+
+    @keyframes glitch-color {
+        0% {
+            transform: translate(0);
+        }
+
+        20% {
+            transform: translate(-3px, 3px);
+        }
+
+        40% {
+            transform: translate(-3px, -3px);
+        }
+
+        60% {
+            transform: translate(3px, 3px);
+        }
+
+        80% {
+            transform: translate(3px, -3px);
+        }
+
+        to {
+            transform: translate(0);
+        }
+    }
+
+    .channel_split_wrapper {
+        position: relative;
+        font-size: 64px;
+        perspective: 1500px;
+        perspective-origin: center;
+    }
+
+    .channel_split_static {
+        opacity: 0;
+    }
+
+    .channel_split {
+        position: absolute;
+        top: 0;
+        left: 0;
+        mix-blend-mode: screen;
+        /* Added blend mode */
+        color: #fff;
+        overflow: hidden;
+        /* Ensure elements do not overflow */
+    }
+
+    .channel_split_red {
+        filter: url('#red');
+        /* Added filter for red extract */
+        animation: ANIMATE-RED 2000ms infinite;
+    }
+
+    .channel_split_green {
+        filter: url('#green');
+        /* Added filter for green extract */
+    }
+
+    .channel_split_blue {
+        filter: url('#blue');
+        /* Added filter for blue extract */
+        animation: ANIMATE-BLUE 2000ms infinite;
+    }
+
+    @keyframes ANIMATE-RED {
+        0% {
+            transform: rotateZ(0);
+        }
+
+        50% {
+            transform: rotateZ(-6deg);
+        }
+
+        100% {
+            transform: rotateZ(0);
+        }
+    }
+
+    @keyframes ANIMATE-BLUE {
+        0% {
+            transform: rotateZ(0);
+        }
+
+        50% {
+            transform: rotateZ(6deg);
+        }
+
+        100% {
+            transform: rotateZ(0);
+        }
+    }
+
+    .nft_card video {
+        z-index: -1;
+    }
+
+    .nft_card .nft_address {
+        transform-style: preserve-3d;
+        z-index: 34;
+        position: absolute;
+    }
+
+    .nft_card .background, .nft_card .wallet, .nft_card .mint {
+        height: fit-content;
+        width: 100%;
+        position: absolute;
+        transform-style: preserve-3d;
+        inset: 0;
+    }
+
+    .nft_card .background {
+        /*animation: animate 5s linear alternate infinite;*/
+    }
+
+    .nft_card .wallet {
+        z-index: 1;
+        filter: blur(5px);
+        /*animation: animate 5s linear alternate infinite;*/
+    }
+
+    .nft_card .wallet h1, .nft_card .wallet p {
+        background: #000;
+    }
+
+    .nft_card .figurea0 {
+        padding: 2px;
+        z-index: 4;
+        transform: rotate3d(1, 1, 0, 60deg);
+        /* clip-path: polygon(0px 0px, 100px 0px, 100px 100px, 0px 100px, 0px 5px, 5px 5px, 5px 95px, 95px 95px, 95px 5px, 0px 5px); */
+        width: 100%;
+        height: 400px;
+        transform-style: preserve-3d;
+        position: absolute;
+    }
+
+    .nft_card .figurea1 {
+        padding: 2px;
+        z-index: 2;
+        transform: rotate3d(1, 1, 0, 60deg);
+        /* clip-path: polygon(0px 0px, 100px 0px, 100px 100px, 0px 100px, 0px 5px, 5px 5px, 5px 95px, 95px 95px, 95px 5px, 0px 5px); */
+        width: 100%;
+        height: 400px;
+        transform-style: preserve-3d;
+        position: relative;
+        background: url('./images/tele3.jpg') repeat;
+        background-position: 0px 0px;
+    }
+
+    .nft_card .mint {
+        z-index: 0;
+        filter: grayscale(13%) sepia(5%) blur(1px) brightness(200%) saturate(378%) contrast(203%);
+        /* clip-path: polygon(50% 0%, 50% 50%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
   --path: 50% 0%, 50% 50% 0, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%;
   --back: conic-gradient(at 53% 47%, orange,pink,purple); */
-  }
-
-  .nft_card .mint::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    background-color: #eee;
-    transform: translate(-50%, -50%) rotate(45deg) rotate3d(1, -1, 0, 65deg);
-    border-radius: 28px 0 20px 0;
-  }
-
-
-  .nft_card .figurea1 img {
-    border-radius: 10px;
-    width: 100%;
-    ;
-    height: 100%;
-  }
-
-  .nft_card .corner {
-    font-size: 60px;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border: 1px solid blue;
-    z-index: 4;
-    display: none;
-  }
-
-  @keyframes animate {
-    from {
-      clip-path: polygon(10% 10%, 10% 90%, 90% 50%);
     }
 
-    to {
-      clip-path: polygon(20% 25%, 90% 50%, 80% 10%);
+    .nft_card .mint::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        background-color: #eee;
+        transform: translate(-50%, -50%) rotate(45deg) rotate3d(1, -1, 0, 65deg);
+        border-radius: 28px 0 20px 0;
     }
-  }
-  .channel-split-wrapper {
-      position: relative;
-      font-size: 64px;
-      perspective: 1500px;
-      perspective-origin: center;
-  }
 
-  .channel-split-static {
-      opacity: 0;
-  }
+    .nft_card .figurea1 img {
+        border-radius: 10px;
+        width: 100%;
+        ; height: 100%;
+    }
 
-  .channel-split {
-      position: absolute;
-      top: 0;
-      left: 0;
-      mix-blend-mode: screen;
-      /* Added blend mode */
-      color: #fff;
-      overflow: hidden;
-      /* Ensure elements do not overflow */
-  }
+    .nft_card .corner {
+        font-size: 60px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border: 1px solid blue;
+        z-index: 4;
+        display: none;
+    }
 
-  .channel-split-red {
-      filter: url('#red');
-      /* Added filter for red extract */
-      animation: ANIMATE-RED 2000ms infinite;
-  }
+    @keyframes animate {
+        from {
+            clip-path: polygon(10% 10%, 10% 90%, 90% 50%);
+        }
 
-  .channel-split-green {
-      filter: url('#green');
-      /* Added filter for green extract */
-  }
+        to {
+            clip-path: polygon(20% 25%, 90% 50%, 80% 10%);
+        }
+    }
 
-  .channel-split-blue {
-      filter: url('#blue');
-      /* Added filter for blue extract */
-      animation: ANIMATE-BLUE 2000ms infinite;
-  }
+    .channel_split_wrapper {
+        position: relative;
+        font-size: 64px;
+        perspective: 1500px;
+        perspective-origin: center;
+    }
 
-  @keyframes ANIMATE-RED {
-      0% {
-          transform: rotateZ(0);
-      }
+    .channel_split_static {
+        opacity: 0;
+    }
 
-      50% {
-          transform: rotateZ(-6deg);
-      }
+    .channel_split {
+        position: absolute;
+        top: 0;
+        left: 0;
+        mix-blend-mode: screen;
+        /* Added blend mode */
+        color: #fff;
+        overflow: hidden;
+        /* Ensure elements do not overflow */
+    }
 
-      100% {
-          transform: rotateZ(0);
-      }
-  }
+    .channel_split_red {
+        filter: url('#red');
+        /* Added filter for red extract */
+        animation: ANIMATE-RED 2000ms infinite;
+    }
 
-  @keyframes ANIMATE-BLUE {
-      0% {
-          transform: rotateZ(0);
-      }
+    .channel_split_green {
+        filter: url('#green');
+        /* Added filter for green extract */
+    }
 
-      50% {
-          transform: rotateZ(6deg);
-      }
+    .channel_split_blue {
+        filter: url('#blue');
+        /* Added filter for blue extract */
+        animation: ANIMATE-BLUE 2000ms infinite;
+    }
 
-      100% {
-          transform: rotateZ(0);
-      }
-  }
+    @keyframes ANIMATE-RED {
+        0% {
+            transform: rotateZ(0);
+        }
+
+        50% {
+            transform: rotateZ(-6deg);
+        }
+
+        100% {
+            transform: rotateZ(0);
+        }
+    }
+
+    @keyframes ANIMATE-BLUE {
+        0% {
+            transform: rotateZ(0);
+        }
+
+        50% {
+            transform: rotateZ(6deg);
+        }
+
+        100% {
+            transform: rotateZ(0);
+        }
+    }
 </style>
-
 <body>
-  <!-- SVG Filters for color extraction -->
-  <svg style="position: absolute; width: 0; height: 0;">
-      <defs>
-          <filter id="red">
-              <feColorMatrix type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
-          </filter>
-          <filter id="green">
-              <feColorMatrix type="matrix" values="0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0" />
-          </filter>
-          <filter id="blue">
-              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0" />
-          </filter>
-      </defs>
-  </svg>
-  <div class="loadingContainer">
-    <div id="report_card" class="report_card"></div>
-    <div id="report_ball" class="report_ball"></div>
-    <div id="nft_card" class="nft_card">
-      <div id="figurea0" class="figurea0">
-        <div id="nft_address" class="nft_address">0x32Be343B94f860124dC4fEe1c7B7B8B646F6D9F</div>
-        <div class="glitch_wrapper">
-          <div class="glitch" data-glitch="glitch">glitch
+    <!-- SVG Filters for color extraction -->
+    <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+            <filter id="red">
+                <feColorMatrix type="matrix" values="1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/>
+            </filter>
+            <filter id="green">
+                <feColorMatrix type="matrix" values="0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/>
+            </filter>
+            <filter id="blue">
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0"/>
+            </filter>
+        </defs>
+    </svg>
+    <div class="loadingContainer">
+        <div id="report_card" class="report_card"></div>
+        <div id="report_ball" class="report_ball"></div>
+        <div id="nft_card" class="nft_card">
+            <div id="figurea0" class="figurea0">
+                <div id="nft_address" class="nft_address">0x32Be343B94f860124dC4fEe1c7B7B8B646F6D9F</div>
+                <div class="glitch_wrapper">
+                    <div class="glitch" data-glitch="glitch">glitch
           </div>
-        </div>
-      </div>
-      <div id="figurea1" class="figurea1">
-        <img id="nft_image" src="./images/nft.png" />
-      </div>
-      <div id="marker0" class="corner">TL</div>
-      <div id="marker2" class="corner">TR</div>
-      <div id="marker4" class="corner">BL</div>
-      <div id="marker6" class="corner">BR</div>
-      <div class="background">
-        <video src='./videos/download.webm' width='100%' autoPlay loop muted playsInline></video>
-        <h1>Title This Is a Sample</h1>
-        <p>Some content</p>
-      </div>
-      <div id="figurea2" class="wallet">
-        <div id="text" class="channel-split-wrapper">
-           <!-- RGB
+                </div>
+            </div>
+            <div id="figurea1" class="figurea1">
+                <img id="nft_image" src="./images/nft.png"/>
+            </div>
+            <div id="marker0" class="corner">TL</div>
+            <div id="marker2" class="corner">TR</div>
+            <div id="marker4" class="corner">BL</div>
+            <div id="marker6" class="corner">BR</div>
+            <div class="background">
+                <video src='./videos/download.webm' width='100%' autoPlay loop muted playsInline></video>
+                <h1>Title This Is a Sample</h1>
+                <p>Some content</p>
+            </div>
+            <div id="figurea2" class="wallet">
+                <div id="disspurse" class="channel_split_wrapper">
+                    <!-- RGB
              <img id="example-element" src="./images/nft.png" width="500">-->
-            <video src="./videos/download.webm" width="100%" autoplay="" loop="" muted="" playsinline=""></video> 
-            <!-- <video src='./videos/download.webm' width='100%' autoPlay loop muted playsInline></video>
-           --> <h1>Title This Is a Sample</h1> 
-            <p>Some content</p>
+                    <video src="./videos/download.webm" width="100%" autoplay="" loop="" muted="" playsinline=""></video>
+                    <!-- <video src='./videos/download.webm' width='100%' autoPlay loop muted playsInline></video>
+           -->
+                    <h1>Title This Is a Sample</h1>
+                    <p>Some content</p>
+                </div>
+            </div>
+            <div id="figurea3" class="mint">
+                <video src='./videos/download.webm' width='100%' autoPlay loop muted playsInline></video>
+                <h1>Title This Is a Sample</h1>
+                <p>Some content</p>
+            </div>
         </div>
-      </div>
-      <div id="figurea3" class="mint">
-        <video src='./videos/download.webm' width='100%' autoPlay loop muted playsInline></video>
-        <h1>Title This Is a Sample</h1>
-        <p>Some content</p>
-      </div>
     </div>
-  </div>
 </body>
 <script src="./scripts/jquery.min.js"></script>
 <script src="./scripts/chart.min.js"></script>

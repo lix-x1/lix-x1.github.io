@@ -54,8 +54,8 @@ function adjustblurcard(card) {
         elt.style.top = corners[i + 1] + "px";
         center_distances[i/2 >> 0] = $app.distanceVector(screenhalfv, {x: corners[i], y: corners[i + 1], z: 0}, true) / screenhalfv.x;
     }
-    //console.clear();
-    //console.log(center_distances);
+    console.clear();
+    console.log(center_distances);
     return corners;
 }
 
@@ -107,8 +107,8 @@ $app.tiltfunc = function (event) {
     }
 }
 
-var $width = $app.figurea1.elem.clientWidth;
-var $height = $app.figurea1.elem.clientHeight;
+var $width = $app.nft_image.elem.clientWidth;
+var $height = $app.nft_image.elem.clientHeight;
 var screenhalfv = {
     x: $width/2 >> 0,
     y: $height/2 >> 0,
@@ -118,14 +118,14 @@ $app.onresponse.push(function () {
     window.removeEventListener("deviceorientation", $app.tiltfunc, false); // Slow it down.
     window.removeEventListener("devicemotion", $app.tiltfunc, false); // Slow it down.
     window.removeEventListener("MozOrientation", $app.tiltfunc, false); // Slow it down.
-    $width = $app.figurea1.elem.clientWidth;
-    $height = $app.figurea1.elem.clientHeight;
+    $width = $app.nft_image.elem.clientWidth;
+    $height = $app.nft_image.elem.clientHeight;
     screenhalf = {
         x: $width/2 >> 0,
         y: $height/2 >> 0,
         z: 0
     };
-    $app.figurea1.elem.style.backgroundSize = $width + 'px';
+    $app.nft_image.elem.style.backgroundSize = $width + 'px';
     var $thick = 5;
     var $round = 40;
     var clipPathStr = "path('" +
@@ -267,7 +267,6 @@ function rotate_step() {
                 ${corners[6]-($thick*center_distances[2])}px ${corners[7]-($thick*center_distances[2])}px, 
                 ${corners[4]+($thick*center_distances[3])}px ${corners[5]+($thick*center_distances[3])}px
                 `+clipMode.close);
-                console.clear();
         }
 
     //console.log(center_distances[0] < center_distances[1]);
@@ -311,17 +310,17 @@ function channelSplit(elem) {
         elem.innerHTML = "";
 
         const spanHidden = document.createElement("span");
-        spanHidden.classList.add("channel-split-static");
+        spanHidden.classList.add("channel_split_static");
         spanHidden.innerHTML = inner;
         elem.appendChild(spanHidden);
 
         ["red", "green", "blue"].forEach(x => {
             const span = document.createElement("span");
-            span.classList.add("channel-split");
-            span.classList.add(`channel-split-${x}`);
+            span.classList.add("channel_split");
+            span.classList.add(`channel_split_${x}`);
             span.innerHTML = inner;
             elem.appendChild(span);
         });
     }
 }
-channelSplit(document.getElementById("text"));
+channelSplit(document.getElementById("disspurse"));//Diss the purses, LOL ?
