@@ -1,2 +1,2 @@
-🌈 Dispersion Credit Card - FinTech - https://dribbble.com/shots/24715383--Dispersion-Credit-Card-FinTech
+🌈 Dispersion Credit Card - FinTech - https://dribbble.com/tags/glass-dispersion
 Demo: https://lix-x1.github.io/creditcard.html
